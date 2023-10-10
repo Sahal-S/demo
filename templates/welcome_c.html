@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Page</title>
+    <style>
+        /* Styling for the logout button */
+        .logout-button {
+            position:fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #ffffff;
+            color:#53e3a6 ;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        #showFormButton {
+            background-color: #ffffff;
+            color:#2a6e52 ;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 15px;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background:#f2f3f3;
+            background: linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+            background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+        }
+        
+        h1 {
+            font-size: 36px;
+            animation: fadeIn 3s ease-in;
+            color:#ffff;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            cursor: pointer;
+            color:#176343;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: 1px solid #53e3a6
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr {
+            background-color: rgba(248, 246, 246, 0.9);
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            border:#53e3a6
+        }th, td {
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        th {
+            background-color: #53e3a6;
+            color: #fff;
+        }
+
+        tr {
+            background-color: rgba(248, 246, 246, 0.9);
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Animation when row is added or deleted */
+        tr.added {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        tr.deleted {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        /* Styling for the delete button */
+        .del {
+            background-color: #53e3a6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .del:hover {
+            background-color:#53e3a6 ;
+        }
+
+        /* Styling for the add form */
+        h2 {
+            margin: 20px 0;
+            font-size: 24px;
+            color:#ffff;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+          
+        #myForm{
+            padding: 25px 0;
+            position: relative;
+            z-index: 2;
+          }
+          #gender,#usernme,#passwrd,#email,#designation,#dob
+        {
+                    appearance: none;
+            outline: 0;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255,1);
+            width: 250px;
+            border-radius: 3px;
+            padding: 10px 15px;
+            margin: 0 auto 10px auto;
+            display: block;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            -webkit-transition-duration: 0.25s;
+                    transition-duration: 0.25s;
+            font-weight: 300;
+        }
+        
+        #gender,#usernme,#passwrd,#email,#designation,#dob{
+            background-color: rgba(255, 252, 252,1);
+        }
+        #gender,#usernme,#passwrd,#email,#designation,#dob:hover {
+            background-color: rgba(255, 252, 252,1);
+        }
+        
+        #gender,#usernme,#passwrd,#email,#designation,#dob
+        {
+            background-color: white;
+            width: 300px;
+            color: #53e3a6;
+        }
+        #gender,#usernme,#passwrd,#email,#designation,#dob:focus {
+            background-color: white;
+            width: 300px;
+            color: #53e3a6;
+        }
+
+        label {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            position:absolute;
+            left:40%;
+        }
+
+        .add:hover {
+            background-color: #45a049;
+        }
+
+        /* JavaScript for confirmation before deletion */
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes tableClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        input::placeholder {
+            color:rgba(59, 57, 57, 0.4); /* Set the placeholder text color to blue */
+          }
+    
+    
+    </style>
+</head>
+<body>
+    
+    <form action="/log_out_c/" method="POST">
+        {% csrf_token %}
+        <button class="logout-button" type="submit">Logout</button>
+    </form>
+
+    <h1>Welcome {{name}}</h1>
+    <h2>Registered employee list</h2>
+    
+    <table border="0.5"> 
+        <tr>
+            <th>Employee Name</th>
+            <th>Delete</th>
+            <th>show</th>
+        </tr>
+        {% for i in ls %}
+        <tr>
+            <td>{{ i.username }}</td>
+            <td>
+                <form action="/dlt/" method="POST">
+                    {% csrf_token %}
+                    <input type="text" id="userInput" name="dltval" value="{{ i.username }}" hidden>
+                    <button class="del" type="submit">Delete</button>
+                </form>
+            </td>
+            <td>
+                
+            </td>
+           
+        </tr>
+        {% endfor %}
+    </table>
+
+    <button id="showFormButton">click here to add employe</button>
+    <form action="/add/" method="POST" id="myForm" style="display: none;">
+        {% csrf_token %}
+        <input type="text" class="a" id="usernme" name="usernme" placeholder="Username">
+        <input type="text" class="a"  id="passwrd" name="passwrd" placeholder="Password">
+        <input type="text" id="email" name="email" placeholder="email" required>
+        <input type="text" id="designation" name="designation" placeholder="Designation" required>
+        <input type="date" id="dob" name="dob" placeholder="Date of birth" required>
+        <select id="gender"  name="gender" required>
+            <option value="" disabled selected>Choose gender here</option>
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <option value="other">other</option>
+            <option value="NA">Prefer not to specify</option>
+          </select>
+        <button class="add"  type="submit">Add</button> 
+
+    </form>
+
+    <script>
+        // JavaScript for confirming deletions
+        document.addEventListener('DOMContentLoaded', function() {
+            const showFormButton = document.getElementById('showFormButton');
+            const myForm = document.getElementById('myForm');
+          
+            // Add a click event listener to the button
+            showFormButton.addEventListener('click', function() {
+              // Toggle the form's visibility
+              if (myForm.style.display === 'none' || myForm.style.display === '') {
+                myForm.style.display = 'block';
+              }else {
+                myForm.style.display = 'none';
+              }
+            });
+          });
+          
+    </script>
+</body>
+</html>
+
+    
+

@@ -1,0 +1,59 @@
+# Ignore database files
+
+
+# Ignore media and static files
+/media/
+/static/
+
+# Ignore virtual environment folders (if using virtualenv)
+venv/
+env/
+
+# Ignore logs
+*.log
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore sensitive or secret information (credentials, keys, etc.)
+*.env
+*.ini
+
+# Ignore user-specific settings
+*.local
+
+# Ignore IDE-specific files and directories
+.vscode/
+.idea/
+
+# Ignore system and temporary files
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Ignore local development settings (if applicable)
+settings_local.py
+
+# Ignore migrations (if you prefer not to version them)
+*/migrations/
+
+# Ignore backup and archive files
+*.bak
+*.zip
+*.gz
+
+# Ignore compiled JavaScript and CSS files
+*.js.map
+*.css.map
+
+# Ignore node_modules directory (if using Node.js)
+node_modules/
+
+# Ignore Docker related files (if using Docker)
+docker-compose.yml
+Dockerfile
+
+# Ignore Heroku specific files (if using Heroku)
+Procfile
+runtime.txt

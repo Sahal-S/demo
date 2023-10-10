@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Dropdown Form</title>
+</head>
+<body>
+    <h1>Choose Your Favorite Color</h1>
+    <form method="POST" action="/droptest/">
+        {% csrf_token %}
+        <label for="color">Select a color:</label>
+        <select id="color" name="register">
+            <option value="employe">employe</option>
+            <option value="company">company</option>
+        </select>
+        <br>
+        <input type="submit" value="register">
+    </form>
+    
+    <form method="POST" action="/test/">
+        {% csrf_token %}
+        <label for="color">Select a color:</label>
+        <select id="color" name="login">
+            <option value="employe">employe</option>
+            <option value="company">company</option>
+        </select>
+        <br>
+        <input type="submit" value="login">
+    </form>
+    
+    
+</body>
+</html>
