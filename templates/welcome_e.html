@@ -54,6 +54,7 @@
           margin: 10px 0;
         }
         
+        
         .logout-button {
           position:fixed;
           top: 10px;
@@ -66,8 +67,10 @@
           cursor: pointer;
       }
         
-        .button:hover {
-          background-color: #0056b3;
+        .logout-button:hover {
+          
+          transform: scale(1.15);
+
         }
         
   </style>
@@ -80,9 +83,29 @@
     <h3 class="username">@{{ls.company}}</h3>
     <p class="tagline">{{ls.designation}}</p>
     <p class="tagline">{{ls.email}}</p>
-    <p>{{ls.interest}}</p>
+    <p id="interest-text">{{ls.interest}}</p>
     <form action="/log_out_e/">
       <input type="submit" class="logout-button" value="Logout">
     </form>
   </div>
 </div>
+<script>
+  // Get the <p> element by its id
+    const interestText = document.getElementById("interest-text");
+
+    // Check the value of ls.interest and update the text accordingly
+    if ({{ ls.interest }} === 1) {
+      interestText.textContent = "congatulations you are Selected";
+      interestText.style.color = "#116d47";
+      interestText.style.fontWeight = "bold";
+    } else {
+      interestText.textContent = "Not Selected yet";
+      interestText.style.color = "#ec0f0f";
+      interestText.style.fontWeight = "bold";
+    }
+  
+    // Function to show the notification (you can customize this function)
+    function showNotification() {
+      // Add your notification logic here
+    }
+</script>

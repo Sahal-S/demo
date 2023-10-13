@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import employe
 from django.contrib import sessions
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 @csrf_exempt
@@ -169,6 +169,7 @@ def dlt(request):
     obj3.delete()
     return redirect('success_c')
 
+@csrf_exempt
 def add(request):
     user_name=request.POST['usernme']
     pass_word=request.POST['passwrd']
@@ -227,6 +228,14 @@ def set0(request):
     lsc=employe.objects.get(username=user_name)
     print('successfully set as 0')
     return redirect('show2')
+
+def go_back(request):
+    previous_url = request.META.get('HTTP_REFERER')
+    if previous_url:
+        return HttpResponseRedirect(previous_url)
+    else:
+        # If there is no previous URL, you can redirect to a default URL.
+        return HttpResponseRedirect('/')
 
 
 

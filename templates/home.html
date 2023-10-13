@@ -2,7 +2,7 @@
 	<div class="container">
 		<h1>Welcome</h1>
 		<form class="form" id="loginForm" action="check/" method="POST">
-            <select id="role" name="role">
+            <select id="role" name="role" required>
                 <option value="" disabled selected>Login as</option>
                 <option value="employe">Employe</option>
                 <option value="company">Company</option>
@@ -15,6 +15,13 @@
         <div id="top-right-link">
           <a href="https://drive.google.com/file/d/1xlVcv-96_GH-TOHJd6dVSlcL2PHfMP_H/view?usp=drive_link">about creator</a>
         </div>
+        <div class="message-container" id="errorMessage"></div>
+       {% for i in messages %} 
+       <div class="message">
+            <h6>{{i}}</h6>
+       </div>
+       {% endfor %}
+       </div>
 	</div>
 	
 	<ul class="bg-bubbles">
@@ -87,11 +94,11 @@ body :-ms-input-placeholder {
   background: linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
   background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
   position: absolute;
-  top: 50%;
+  top:0;
   right:0;
   width: 100%;
-  height: 400px;
-  margin-top:-200px;
+  height: 100%;
+  margin-top:0px;
   overflow: hidden;
 }
 .wrapper.form-success .container h1 {
@@ -265,6 +272,11 @@ form button:hover {
   position: fixed;
   top: 10px; /* Adjust the top offset as needed */
   right: 10px; /* Adjust the right offset as needed */
+}
+.message
+{
+  color:#f53d3d;
+  font-size: 40px;
 }
 
 @keyframes square {

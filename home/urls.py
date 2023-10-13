@@ -21,5 +21,6 @@ urlpatterns = [
     path('set1/',views.set1,name='set1'),
     path('set0/',views.set0,name='set0'),
     path('modify/',views.modify,name='modify'),
+    path('go-back/', views.go_back, name='go_back'),
     path('power/',views.power,name='power')
       ]

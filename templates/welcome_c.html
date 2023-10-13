@@ -257,10 +257,10 @@
                 </form>
             </td>
             <td>
-                <form action="/dlt/" method="POST">
+                <form action="/dlt/" method="POST" onsubmit="return confirmAction()">
                     {% csrf_token %}
                     <input type="text" id="userInput" name="dltval" value="{{ i.username }}" hidden>
-                    <button class="del" type="submit">Delete</button>
+                    <button class="del" type="submit" >Delete </button>
                 </form>
             </td>
            
@@ -303,6 +303,22 @@
               }
             });
           });
+        
+          function confirmAction() {
+            // Use the window.confirm() method to show a confirmation dialog
+            const confirmed = window.confirm("Are you sure you want to perform this action?");
+            
+            if (confirmed) {
+                // The user clicked OK
+                alert("Action confirmed!");
+                // You can perform your desired action here
+            } else {
+                // The user clicked Cancel
+                alert("Action canceled.");
+                return false; // Prevent the default action
+            }
+        }
+          
           
     </script>
 </body>
