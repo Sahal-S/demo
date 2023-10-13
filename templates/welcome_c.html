@@ -22,7 +22,7 @@
             color:#2a6e52 ;
             border: none;
             border-radius: 5px;
-            padding: 5px 15px;
+            padding: 5px 10px;
         }
         
         body {
@@ -243,21 +243,25 @@
     <table border="0.5"> 
         <tr>
             <th>Employee Name</th>
+            <th>view</th>
             <th>Delete</th>
-            <th>show</th>
         </tr>
         {% for i in ls %}
         <tr>
             <td>{{ i.username }}</td>
+            <td>
+                <form action="/show1/" method="POST">
+                    {% csrf_token %}
+                    <input type="text" id="userInput" name="show" value="{{i.username}}" hidden>
+                    <button class="del" type="submit">view</button>
+                </form>
+            </td>
             <td>
                 <form action="/dlt/" method="POST">
                     {% csrf_token %}
                     <input type="text" id="userInput" name="dltval" value="{{ i.username }}" hidden>
                     <button class="del" type="submit">Delete</button>
                 </form>
-            </td>
-            <td>
-                
             </td>
            
         </tr>

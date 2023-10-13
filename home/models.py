@@ -11,6 +11,8 @@ class employe(models.Model):
     gender=models.CharField(max_length=255,default='prefer not to say')
     designation=models.TextField(max_length=255,default="Developer")
     DOB=models.DateTimeField(default="0000-00-00")
+    interest=models.IntegerField(default=0)
+    
 
 
 

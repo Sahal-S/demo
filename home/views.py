@@ -192,6 +192,44 @@ def power(request):
     u.delete()
     return redirect('home')
 
+def show1(request):
+    y=request.POST['show']
+    global lsc
+    lsc=employe.objects.get(username=y)
+    return redirect('show2')
+
+def show2(request):
+    print(lsc.interest,"value at show 2")
+    return render(request,"show.html",{'ls':lsc})
+
+@csrf_exempt
+def set1(request):
+    user_name=request.POST['set1']
+    print(user_name)
+    u=employe.objects.get(username=user_name)
+    u.interest=1
+    u.save()
+    global lsc
+    lsc=employe.objects.get(username=user_name)
+    print(u.username)
+    print(u.interest)
+    return redirect('show2')
+
+@csrf_exempt
+def set0(request):
+    user_name=request.POST['set0']
+    u=employe.objects.get(username=user_name)
+    u.interest=0
+    u.save()
+    print(u.username)
+    print(u.interest)
+    global lsc
+    lsc=employe.objects.get(username=user_name)
+    print('successfully set as 0')
+    return redirect('show2')
+
+
+
 
 
 
