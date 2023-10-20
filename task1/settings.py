@@ -76,10 +76,16 @@ WSGI_APPLICATION = 'task1.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',  # This is the PostgreSQL database engine.
+        'NAME': 'db4',               # Replace with your actual database name.
+        'USER': 'postgres',               # Replace with your database user.
+        'PASSWORD': 'Sahal@123',       # Replace with your database password.
+        'HOST': 'localhost',                        # Use 'localhost' if the database is on the same server. Replace with the actual host if it's remote.
+        'PORT': '5432',                            # PostgreSQL default port is 5432.
     }
 }
+
+
 
 
 

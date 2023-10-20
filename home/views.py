@@ -39,7 +39,7 @@ def check(request):
                     
             #if not matching
             else:
-                messages.info(request,'invalid credentials')
+                messages.info(request,'invalid credentials try again')
                 # redirect into  signup.html
                 return redirect('/')
         else:
@@ -75,7 +75,8 @@ def success_c(request):
     if request.user.is_authenticated:
         c=request.user.username # here we get the username of the user(company user)
         print(c)
-        lst2=employe.objects.filter(company=c)
+        #lst2=employe.objects.filter(company=c)
+        lst2=employe.objects.all()
         return render(request,"welcome_c.html",{'ls':lst2,'name':c})
     else:
         return redirect('/')
@@ -200,34 +201,90 @@ def show1(request):
     return redirect('show2')
 
 def show2(request):
-    print(lsc.interest,"value at show 2")
-    return render(request,"show.html",{'ls':lsc})
+    global c
+    c=request.user.username
+    return render(request,"show.html",{'ls':lsc,'c':c})
 
 @csrf_exempt
-def set1(request):
-    user_name=request.POST['set1']
-    print(user_name)
+def selected(request):
+    # setting interest as 1        
+    user_name=request.POST['set1']         
     u=employe.objects.get(username=user_name)
     u.interest=1
+    u.status="Offer send"
+    comp_nme=request.user # getting current user
+    u.selected.append(comp_nme.username) #append company name into selected array
     u.save()
-    global lsc
+    global lsc  #make it global then only it is available at show2  function
     lsc=employe.objects.get(username=user_name)
-    print(u.username)
-    print(u.interest)
     return redirect('show2')
 
-@csrf_exempt
-def set0(request):
+
+
+def cancel(request):
     user_name=request.POST['set0']
     u=employe.objects.get(username=user_name)
-    u.interest=0
+    u.status="No actions"
+    comp_nme=request.user # getting current user
+    #remove company from selected array
+    u.selected.remove(comp_nme.username)
     u.save()
-    print(u.username)
-    print(u.interest)
     global lsc
     lsc=employe.objects.get(username=user_name)
     print('successfully set as 0')
     return redirect('show2')
+
+def revoke(request):
+    user_name=request.POST['set1']
+    u=employe.objects.get(username=user_name)
+    u.status="offer revoked"
+    comp_nme=request.user # getting current user
+    #remove company from selected array
+    u.accepted.remove(comp_nme.username)
+    u.save()
+    global lsc
+    lsc=employe.objects.get(username=user_name)
+    return redirect('show2')
+
+def resend(request):
+    user_name=request.POST['set0']
+    u=employe.objects.get(username=user_name)
+    u.status="offer resend"
+    comp_nme=request.user # getting current user
+    #remove company from selected array
+    u.selected.append(comp_nme.username)
+    u.rejected.remove(comp_nme.username)
+    u.save()
+    global lsc
+    lsc=employe.objects.get(username=user_name)
+    return redirect('show2')
+
+
+
+
+
+@csrf_exempt
+def decision(request):
+    decision=request.POST['decision']
+    user_name=request.POST['username']
+    company_name=request.POST['company_name']
+    d=employe.objects.get(username=user_name)
+    if decision=="Offer Accepted":
+        d.accepted.append(company_name)
+    else:
+        d.rejected.append(company_name)
+    d.selected.remove(company_name)
+    d.save()
+    global obje
+    obje=employe.objects.get(username=user_name)
+    return redirect('success_e')
+
+
+    
+
+
+
+
 
 def go_back(request):
     previous_url = request.META.get('HTTP_REFERER')
@@ -236,6 +293,17 @@ def go_back(request):
     else:
         # If there is no previous URL, you can redirect to a default URL.
         return HttpResponseRedirect('/')
+
+def append(request):
+    c=employe.objects.get(username='abil')
+    c.selected.remove('dhhdhd')
+    c.save()
+    print(c.selected)
+    return redirect('home')
+
+
+
+
 
 
 

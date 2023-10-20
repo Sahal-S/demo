@@ -18,9 +18,13 @@ urlpatterns = [
     path('add/',views.add,name='add'),
     path('show1/',views.show1,name='show1'),
     path('show2/',views.show2,name='show2'),
-    path('set1/',views.set1,name='set1'),
-    path('set0/',views.set0,name='set0'),
+    path('selected/',views.selected,name='selected'),
+    path('cancel/',views.cancel,name='cancel'),
     path('modify/',views.modify,name='modify'),
     path('go-back/', views.go_back, name='go_back'),
-    path('power/',views.power,name='power')
+    path('power/',views.power,name='power'),
+    path('decision/',views.decision,name='decision'),
+    path('revoke/',views.revoke,name='revoke'),
+    path('resend/',views.resend,name='resend'),
+    path('append/',views.append,name='append')
       ]

@@ -205,6 +205,18 @@
         .add:hover {
             background-color: #45a049;
         }
+        .logout-button:hover
+        {
+            transform: scale(1.1);
+        }
+        .del:hover
+        {
+            transform: scale(1.1);  
+        }
+        #showFormButton:hover
+        {
+            transform: scale(1.05); 
+        }
 
         /* JavaScript for confirmation before deletion */
 
@@ -245,6 +257,7 @@
             <th>Employee Name</th>
             <th>view</th>
             <th>Delete</th>
+            <th>Status</th>
         </tr>
         {% for i in ls %}
         <tr>
@@ -263,6 +276,20 @@
                     <button class="del" type="submit" >Delete </button>
                 </form>
             </td>
+            <td>
+               {% if name in i.selected %}
+               offer send
+               {% elif name in i.accepted %}
+               offer accepted
+               {% elif name in i.rejected %}
+               offer rejected
+               {% else %}
+               No actions
+               {% endif %}
+            </td>
+            
+
+
            
         </tr>
         {% endfor %}

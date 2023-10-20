@@ -72,6 +72,103 @@
           transform: scale(1.15);
 
         }
+        .question-container {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .question-and-buttons {
+          display: flex;
+          justify-content: space-between; /* This will push the "Yes" and "No" buttons to the right. */
+          align-items: center;
+          margin-bottom: 20px;
+          border-radius: 5px;
+          background-color: #fff; /* Increase margin between question-and-buttons elements. */
+        }
+        .question-and-buttons:hover
+        {
+          transform: scale(1.03);
+        }
+      
+        
+        .choice-buttons {
+          margin-left: 15px;
+          display: flex;
+          position:relative;
+          right:10px;
+          top:8px; /* Add margin to create space between the question and buttons. */
+          
+        }
+        
+        .choice-button {
+          padding: 10px 20px;
+          background-color: #0074D9;
+          color: #fff;
+          margin-right: 5px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .question
+        {
+          position:relative;
+          left:10px;
+        }
+        #accept
+        {
+          background-color: #0c9937;
+        }
+        #reject
+        {
+          background-color: #f0111c;
+        }
+
+        #accept:hover
+        {
+          transform: scale(1.07);
+        }
+        #reject:hover
+        {
+          transform: scale(1.07);
+        }
+        #heading
+        {
+          text-align: center;
+        }
+        @keyframes moveText {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+        @keyframes transitionText {
+          0%, 100% {
+            transform: translateX(0);
+          }
+          25%, 75% {
+            transform: translateX(-100%);
+          }
+        }
+        @keyframes textAnimation {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.2); opacity: 0.5; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        
+        #offershead
+        {
+          animation: textAnimation 3s infinite;
+        }
+        .username{
+          display:none;
+        }
+        
+        
+        
+        
         
   </style>
 
@@ -83,10 +180,33 @@
     <h3 class="username">@{{ls.company}}</h3>
     <p class="tagline">{{ls.designation}}</p>
     <p class="tagline">{{ls.email}}</p>
-    <p id="interest-text">{{ls.interest}}</p>
     <form action="/log_out_e/">
       <input type="submit" class="logout-button" value="Logout">
     </form>
+  </div>
+  <div id="heading">
+  <h2  style="color:#ffe1e1" id="offershead">you have offers from</h2>
+  <div class="question-container">
+    {% for i in ls.selected %}
+      <div class="question-and-buttons">
+        <p class="question">{{ i }}</p>
+        <div class="choice-buttons">
+          <form method="POST" action="/decision/">
+            {% csrf_token %}
+            <button class="choice-button" id="accept" type="submit" value="{{ls.username}}" name="username">Accept</button>
+            <input type="hidden" name="decision" value="Offer Accepted">
+            <input type="hidden" name="company_name" value="{{i}}">
+          </form>
+          <form method="POST" action="/decision/">
+            {% csrf_token %}
+            <button class="choice-button" id="reject" type="submit" value="{{ls.username}}" name="username" >Reject</button>
+            <input type="hidden" name="decision" value="Offer Rejeced">
+            <input type="hidden" name="company_name" value="{{i}}">
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
   </div>
 </div>
 <script>
@@ -94,15 +214,7 @@
     const interestText = document.getElementById("interest-text");
 
     // Check the value of ls.interest and update the text accordingly
-    if ({{ ls.interest }} === 1) {
-      interestText.textContent = "congatulations you are Selected";
-      interestText.style.color = "#116d47";
-      interestText.style.fontWeight = "bold";
-    } else {
-      interestText.textContent = "Not Selected yet";
-      interestText.style.color = "#ec0f0f";
-      interestText.style.fontWeight = "bold";
-    }
+   
   
     // Function to show the notification (you can customize this function)
     function showNotification() {
